@@ -128,7 +128,17 @@ var map = L.mapbox.map('map', 'mato.map-6nddt5ds', {
     zoomControl: true
 });
 
-map.dragging.enable();
+var zoom_bar = new Dragdealer('zoom-bar', {
+    steps: zooms,
+    snap: true,
+    horizontal: false,
+    vertical: true,
+    callback: function(x, y) {
+        var z = y * (zooms - 1);
+        map.setZoom(z);
+        handle.innerHTML = z;
+    }
+});
 
 var placesLayer = L.mapbox.featureLayer(places)
     .addTo(map);
